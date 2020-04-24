@@ -5,11 +5,72 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cc": "jest --coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "private": true,
+  "workspaces": [
+    "src/*"
+  ],
+  "jest": {
+    "preset": "jest-preset-angular",
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "src/tsconfig.spec.json"
+      },
+      "__TRANSFORM_HTML__": true
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(ramda/es|@ngrx))"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.ts"
+    ],
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/jest.ts",
+      "!src/polyfills.ts",
+      "!src/**/index.ts",
+      "!src/**/main.ts",
+      "!src/typings.d.ts",
+      "!src/environments/**",
+      "!**/node_modules/**",
+      "!src/**/*.constants.ts",
+      "!src/**/*.settings.ts",
+      "!src/**/*.mocks.ts",
+      "!src/**/*.module.ts",
+      "!src/**/*.model.ts",
+      "!src/**/*.enum.ts",
+      "!src/**/*.routes.ts"
+    ],
+    "coverageReporters": [
+      "text",
+      "cobertura",
+      "html"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 60,
+        "functions": 60,
+        "lines": 60,
+        "statements": 60
+      }
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleNameMapper": {
+      "@root/(.*)": "<rootDir>/src/$1"
+    }
+  },
   "dependencies": {
     "@angular/animations": "~9.1.2",
     "@angular/cdk": "^9.1.3",
@@ -30,17 +91,11 @@
     "@angular/cli": "~9.1.2",
     "@angular/compiler-cli": "~9.1.2",
     "@angular/language-service": "~9.1.2",
+    "@types/jest": "^25.2.1",
     "@types/node": "^12.11.1",
-    "@types/jasmine": "~3.5.0",
-    "@types/jasminewd2": "~2.0.3",
     "codelyzer": "^5.1.2",
-    "jasmine-core": "~3.5.0",
-    "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.3.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "~2.1.0",
-    "karma-jasmine": "~2.0.1",
-    "karma-jasmine-html-reporter": "^1.4.2",
+    "jest": "^25.4.0",
+    "jest-preset-angular": "^8.1.3",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
